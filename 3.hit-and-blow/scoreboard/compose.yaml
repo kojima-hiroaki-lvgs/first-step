@@ -1,0 +1,31 @@
+services:
+  daemon:
+    build:
+      context: .
+    command: ["node", "daemon.js"]
+    ports:
+      - 9600:9600
+    volumes:
+      - db:/app/prisma/db
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  scoreboard:
+    build:
+      context: .
+    command: ["./node_modules/.bin/tsx", "scoreboard.tsx"]
+    ports:
+      - 3000:3000
+    volumes:
+      - db:/app/prisma/db
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  migrate:
+    build:
+      context: .
+    command: ["./node_modules/.bin/prisma", "migrate", "deploy"]
+    volumes:
+      - db:/app/prisma/db
+volumes:
+  db:
