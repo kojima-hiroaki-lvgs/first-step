@@ -37,7 +37,7 @@ final class App
         return new self(
             $terminal,
             $display,
-            Chat::new("127.0.0.1", 9600)
+            Chat::new("0.0.0.0", 9600)
         );
     }
 
@@ -107,6 +107,7 @@ final class App
 
     private function shutdown(): void
     {
+        $this->chat->shutdown();
         $this->terminal->disableRawMode();
         $this->terminal->execute(Actions::alternateScreenDisable());
         $this->terminal->execute(Actions::cursorShow());

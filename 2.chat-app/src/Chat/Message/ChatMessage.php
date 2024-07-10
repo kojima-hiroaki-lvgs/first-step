@@ -11,6 +11,6 @@ final class ChatMessage extends Message
 
     public function __toString()
     {
-        return "$this->name: $this->message";
+        return "$this->name $this->message";
     }
 }
