@@ -65,7 +65,7 @@ const prisma = new PrismaClient();
 
 const server = net.createServer(socket => {
     let name;
-    let numbers = [1, 2, 3];
+    let numbers;
     let startAt;
     let attempts = 0;
 
@@ -105,12 +105,12 @@ const server = net.createServer(socket => {
 
         const numberPool = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
-        // while (numbers.length < numberOfDigits) {
-        //     const i = Math.round(Math.random() * 1000) % numberPool.size;
-        //     const n = [...numberPool][i];
-        //     numbers.push(n);
-        //     numberPool.delete(n);
-        // }
+        while (numbers.length < numberOfDigits) {
+            const i = Math.round(Math.random() * 1000) % numberPool.size;
+            const n = [...numberPool][i];
+            numbers.push(n);
+            numberPool.delete(n);
+        }
 
         socket.write(Buffer.from([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
         startAt = new Date();
@@ -146,6 +146,7 @@ const server = net.createServer(socket => {
             await prisma.scores.create({
                 data: {
                     name,
+                    digitsLength: numbers.length,
                     attempts,
                     startAt,
                     endAt

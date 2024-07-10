@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Scores {
-  id       Int      @id @default(autoincrement())
-  name     String
-  attempts Int
-  startAt  DateTime
-  endAt    DateTime
+  id            Int      @id @default(autoincrement())
+  name          String
+  digitsLength Int
+  attempts      Int
+  startAt       DateTime
+  endAt         DateTime
 }

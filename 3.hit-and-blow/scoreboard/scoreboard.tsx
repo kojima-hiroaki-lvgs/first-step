@@ -6,9 +6,11 @@ const app = new Hono()
 const prisma = new PrismaClient();
 
 app.get('/', async (c) => {
+    const digits = c.req.query.digits ?? 3;
     const scores = await prisma.$queryRaw<Scores[]>`
         SELECT *
         FROM Scores
+        WHERE digitsLength = ${digits}
         ORDER BY attempts ASC, endAt - startAt ASC LIMIT 20
     `;
 
@@ -23,6 +25,7 @@ app.get('/', async (c) => {
                 <thead>
                 <tr>
                     <th>名前</th>
+                    <th>ケタ数</th>
                     <th>試行回数</th>
                     <th>思考時間</th>
                 </tr>
@@ -31,6 +34,7 @@ app.get('/', async (c) => {
                 {scores.map(s => (
                     <tr>
                         <td>{s.name}</td>
+                        <td>{s.digitsLength}</td>
                         <td>{s.attempts}回</td>
                         <td>{((s.endAt.getTime() - s.startAt.getTime()) / 1000)}秒</td>
                     </tr>
