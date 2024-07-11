@@ -65,7 +65,7 @@ const prisma = new PrismaClient();
 
 const server = net.createServer(socket => {
     let name;
-    let numbers;
+    let numbers = [];
     let startAt;
     let attempts = 0;
 
