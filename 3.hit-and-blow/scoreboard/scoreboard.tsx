@@ -6,7 +6,7 @@ const app = new Hono()
 const prisma = new PrismaClient();
 
 app.get('/', async (c) => {
-    const digits = c.req.query.digits ?? 3;
+    const digits = c.req.query("digits") ?? 3;
     const scores = await prisma.$queryRaw<Scores[]>`
         SELECT *
         FROM Scores
@@ -21,6 +21,15 @@ app.get('/', async (c) => {
         <body>
         <main>
             <h1>Hit and Blow スコアボード</h1>
+            <nav>
+                <span style="margin: 0 8px 0 8px"><a href="?digits=3">3</a></span>
+                <span style="margin: 0 8px 0 8px"><a href="?digits=4">4</a></span>
+                <span style="margin: 0 8px 0 8px"><a href="?digits=5">5</a></span>
+                <span style="margin: 0 8px 0 8px"><a href="?digits=6">6</a></span>
+                <span style="margin: 0 8px 0 8px"><a href="?digits=7">7</a></span>
+                <span style="margin: 0 8px 0 8px"><a href="?digits=8">8</a></span>
+                <span style="margin: 0 8px 0 8px"><a href="?digits=9">9</a></span>
+            </nav>
             <table>
                 <thead>
                 <tr>
