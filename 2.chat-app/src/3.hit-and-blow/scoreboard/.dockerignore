@@ -1,0 +1,6 @@
+node_modules
+prisma/dev.db
+Dockerfile
+compose.yaml
+.gitignore
+.env

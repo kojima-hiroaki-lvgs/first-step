@@ -1,0 +1,44 @@
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"slices"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	targetList := []int{0,1,2,3,4,5,6,7,8,9}
+	slice := make([]int,9)
+	unique := make([]int,9)
+
+	for i:=0; i<9; i++{
+		index := rand.Intn(len(targetList))
+		result := targetList[index]
+		slice[i] = result
+	}
+
+	for n:=0; n<100; n++{
+		index := rand.Intn(len(targetList))
+		result := targetList[index]
+		unique =append(unique,result) 
+		slices.Sort(slice)
+		unique = slices.Compact(slice)
+		
+		if(len(unique) == 9){
+			rand.Shuffle(len(unique),func(i, j int){
+				unique[i],unique[j] = unique[j], unique[i]
+			})
+			if(unique[0] == 0){
+				unique[0] = 1
+			}	
+			break
+		}
+	}
+	strUnique := []string{}
+	for _, v := range unique {
+		strUnique = append(strUnique, strconv.Itoa(v))
+	}
+	fmt.Println(strings.Join(strUnique,""))
+}

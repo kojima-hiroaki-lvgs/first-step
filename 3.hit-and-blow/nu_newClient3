@@ -1,0 +1,114 @@
+package main
+
+import (
+"fmt"
+"net"
+//"strconv"
+)
+
+func ReadWrite(answerSlice2 []byte, conn net.Conn)[]byte{
+	buf := make([]byte, 32)
+	_, err1 := conn.Write(answerSlice2)
+	if err1 != nil {
+		fmt.Println("failed to write")
+	}
+	_, err2 := conn.Read(buf)
+	if err2 != nil {
+		fmt.Println("failed to read")
+	} else {
+		fmt.Println(answerSlice2)
+			if buf[1] == 0{
+				fmt.Println("correct")
+			}
+	}
+	return buf
+}
+
+func addAnswer(digitSlice []byte, digit byte, conn net.Conn) []byte {
+
+	data2 := []byte{0x02,0,0,0,0,0,0,0,0,0,0x01,0x02,0x03,0,0,0,0,0,0,0}
+	answerSlice2 := data2[0:10]
+
+
+  
+	kojima:
+	for i := 0; i < 10; i++ {		
+		for j := 0; j < 10; j++ {
+			if j == i {
+				continue
+			}
+			for k := 0; k < 10; k++ {
+				if k == i || k == j {
+					continue
+				} else if  digit == 3  {
+					answerSlice2 = append(answerSlice2[:10],byte(i))
+					answerSlice2 = append(answerSlice2[:],byte(j))
+					answerSlice2 = append(answerSlice2[:],byte(k))
+
+					for i:=0; i<7+12; i++{
+						answerSlice2 = append(answerSlice2,0)
+					}
+					ReadWrite := ReadWrite(answerSlice2, conn)
+					fmt.Println(ReadWrite)
+					if ReadWrite[1] == byte(0) {
+						break kojima
+					} 
+						
+					
+				}
+			}
+		}
+	}
+		return answerSlice2	
+}	
+
+func main() {
+	var digit byte
+
+	
+	fmt.Println("桁数を入力してください")
+	fmt.Scan(&digit)  
+  	digitSlice := []byte{0,digit}
+ 
+
+	//DIAL
+	conn, err := net.Dial("tcp",":9600")
+	if err != nil{
+		fmt.Println("error: ", err)
+	} else {
+		fmt.Println("dial success")
+	}
+
+	data1 := []byte{75,79,74,73}
+
+	data1 = append(digitSlice[:], data1[:]...)
+	fmt.Println(data1)
+
+
+	
+	n1, err1 := conn.Write(data1)
+	if (err1 != nil) {
+	fmt.Println("cannot write", err1)
+	fmt.Println(n1)
+	} else {
+	fmt.Println("digit sent")
+	}
+
+	buf1 := make([]byte, 32)
+     n2, err2 := conn.Read(buf1)
+	 if (err2 != nil){
+		fmt.Println("cannot read", err2)
+		fmt.Println(buf1[:n2])
+
+	 } else {
+		fmt.Println("received")
+		fmt.Println(buf1)
+	 } 
+
+	addAnswer(digitSlice,digit,conn)
+}
+
+
+  
+
+	
