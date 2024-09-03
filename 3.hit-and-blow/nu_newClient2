@@ -1,0 +1,149 @@
+package main
+
+import (
+"fmt"
+"net"
+"strconv"
+
+//"strconv"
+)
+
+func main() {
+	var digit byte
+
+	
+	fmt.Println("桁数を入力してください")
+	fmt.Scan(&digit)  
+  	digitSlice := []byte{0,digit}
+ 
+
+	//DIAL
+	conn, err := net.Dial("tcp",":9600")
+	if err != nil{
+		fmt.Println("error: ", err)
+	} else {
+		fmt.Println("dial success")
+	}
+
+	data1 := []byte{75,79,74,73}
+
+	data1 = append(digitSlice[:], data1[:]...)
+	fmt.Println(data1)
+
+
+	
+	n1, err1 := conn.Write(data1)
+	if (err1 != nil) {
+	fmt.Println("cannot write", err1)
+	fmt.Println(n1)
+	} else {
+	fmt.Println("digit sent")
+	}
+
+	buf1 := make([]byte, 32)
+     n2, err2 := conn.Read(buf1)
+	 if (err2 != nil){
+		fmt.Println("cannot read", err2)
+		fmt.Println(buf1[:n2])
+
+	 } else {
+		fmt.Println("received")
+		fmt.Println(buf1)
+	 } 
+
+	//data2 := []byte{0x02,0,0,0,0,0,0,0,0,0,0x01,0x02,0x03,0,0,0,0,0,0,0}
+	
+	
+	addAnswer(digitSlice,digit,conn)
+ 	
+
+}
+
+func addAnswer(digitSlice []byte, digit byte, conn net.Conn) []byte {
+	//var answer string
+	var forty_eight byte
+	
+	//   fmt.Println("回答を入力してください")
+	//   fmt.Scan(&answer) 
+
+	forty_eight = 48
+	digitLen1 := digitSlice[1] + forty_eight
+	digitLen2 := []byte{0,digitLen1}
+	digitLen3 := string(digitLen2[1])//桁数をbyteからstringに変換
+	digitLen4, _ := strconv.Atoi(digitLen3)//桁数をbyteからintに変換
+  
+	data2 := []byte{0x02,0,0,0,0,0,0,0,0,0,0x01,0x02,0x03,0,0,0,0,0,0,0}
+	//10番目まで取って、その後ろに入力した数字を入れる
+	//answerSlice := []byte(answer)
+	answerSlice2 := data2[0:10]
+  
+	
+	kojima1:
+	for i:=0; i<digitLen4; i++{
+		for a,v:= range []byte{0,1,2,3,4,5,6,7,8,9}{
+	 		answerSlice2 = append(answerSlice2[:10],byte(v))
+			 fmt.Println(a)
+			 
+			 for  b,f:= range []byte{0,1,2,3,4,5,6,7,8,9}{
+				answerSlice2 = append(answerSlice2[:11],byte(f))
+				fmt.Println(b)
+				
+				for c,d:= range []byte{0,1,2,3,4,5,6,7,8,9}{
+					answerSlice2 = append(answerSlice2[:12],byte(d))
+					
+					fmt.Println(c)
+
+					for i:=0; i<10-digitLen4+12; i++{
+						answerSlice2 = append(answerSlice2,0)
+						ƒ
+						if(answerSlice2[9] == byte(9) && answerSlice2[10] == byte(9) && answerSlice2[11] == byte(9) ){
+							fmt.Println("999")
+						} 
+					}
+
+					
+
+					  fmt.Println(answerSlice2)
+					  n3, err3 := conn.Write(answerSlice2)
+					  if (err3 != nil) {
+					  fmt.Println("cannot write", err3)
+					  fmt.Println(n3)
+					  } else {
+					  fmt.Println("answer sent")
+					  }
+
+					  buf2 := make([]byte, 32)
+					  n4, err4 := conn.Read(buf2)
+					  if (err4 != nil){
+						  fmt.Println("cannot read", err4)
+						  fmt.Println(buf2)
+						  fmt.Println(n4)
+					  } else {
+						  fmt.Println("answer response received")
+						  fmt.Println(buf2)
+						  if(buf2[1] == 0){
+							break kojima1
+							fmt.Println("kojima1")
+						  } else {
+							fmt.Println("だめーーーーー")
+						  }
+					  } 
+					  
+				}
+				
+			}
+			
+		}
+		
+				
+	}
+  
+
+	
+	return answerSlice2
+}
+	
+	
+  
+  
+

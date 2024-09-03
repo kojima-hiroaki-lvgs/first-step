@@ -1,60 +1,62 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Run hit-and-blow.c",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceRoot}/a.out",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "Build hit-and-blow.c"
-        },
-        {
-            "name": "Listen for Xdebug",
-            "type": "php",
-            "request": "launch",
-            "port": 9003
-        },
-        {
-            "name": "Debug hit-and-blow.php as host",
-            "type": "php",
-            "request": "launch",
-            "program": "${workspaceRoot}/hit-and-blow.php",
-            "cwd": "${fileDirname}",
-            "port": 0,
-            "runtimeArgs": [
-                "-dxdebug.start_with_request=yes"
-            ],
-            "env": {
-                "XDEBUG_MODE": "debug,develop",
-                "XDEBUG_CONFIG": "client_port=${port}"
-            }
-        },
-        {
-            "name": "Debug hit-and-blow.php as client",
-            "type": "php",
-            "request": "launch",
-            "program": "${workspaceRoot}/hit-and-blow.php",
-            "cwd": "${fileDirname}",
-            "port": 0,
-            "runtimeArgs": [
-                "-dxdebug.start_with_request=yes"
-            ],
-            "args": [
-                "10.152.0.70"
-            ],
-            "env": {
-                "XDEBUG_MODE": "debug,develop",
-                "XDEBUG_CONFIG": "client_port=${port}"
-            }
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    // {
+    //   "name": "Run hit-and-blow.c",
+    //   "type": "cppdbg",
+    //   "request": "launch",
+    //   "program": "${workspaceRoot}/a.out",
+    //   "args": [],
+    //   "stopAtEntry": false,
+    //   "cwd": "${workspaceRoot}",
+    //   "environment": [],
+    //   "externalConsole": false,
+    //   "MIMode": "lldb",
+    //   "preLaunchTask": "Build hit-and-blow.c"
+    // },
+    // {
+    //   "name": "Listen for Xdebug",
+    //   "type": "php",
+    //   "request": "launch",
+    //   "port": 9003
+    // },
+    // {
+    //   "name": "Debug hit-and-blow.php as host",
+    //   "type": "php",
+    //   "request": "launch",
+    //   "program": "${workspaceRoot}/hit-and-blow.php",
+    //   "cwd": "${fileDirname}",
+    //   "port": 0,
+    //   "runtimeArgs": ["-dxdebug.start_with_request=yes"],
+    //   "env": {
+    //     "XDEBUG_MODE": "debug,develop",
+    //     "XDEBUG_CONFIG": "client_port=${port}"
+    //   }
+    // },
+    // {
+    //   "name": "Debug hit-and-blow.php as client",
+    //   "type": "php",
+    //   "request": "launch",
+    //   "program": "${workspaceRoot}/hit-and-blow.php",
+    //   "cwd": "${fileDirname}",
+    //   "port": 0,
+    //   "runtimeArgs": ["-dxdebug.start_with_request=yes"],
+    //   "args": ["10.152.0.70"],
+    //   "env": {
+    //     "XDEBUG_MODE": "debug,develop",
+    //     "XDEBUG_CONFIG": "client_port=${port}"
+    //   }
+    // },
+    {
+      "name": "Launch Package",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${fileDirname}/../example.go",
+      "console": "integratedTerminal"
+    }
+  ]
 }
