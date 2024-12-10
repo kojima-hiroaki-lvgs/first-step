@@ -1,0 +1,9 @@
+1 : 実行するコマンドはls
+total 176
+-rw-r--r--@  1 hiroaki.kojima  staff   2189 Sep  3 11:45 README.md
+-rw-r--r--@  1 hiroaki.kojima  staff     77 Sep  3 13:43 a.c
+-rwxr-xr-x@  1 hiroaki.kojima  staff  51592 Sep 25 13:13 a.out
+drwxr-xr-x@ 12 hiroaki.kojima  staff    384 Sep 25 13:14 exmple
+-rw-r--r--@  1 hiroaki.kojima  staff  21828 Sep 30 16:53 fdfd.txt
+drwxr-xr-x@ 19 hiroaki.kojima  staff    608 Sep 30 16:53 shell
+-rw-r--r--@  1 hiroaki.kojima  staff     34 Sep 30 16:54 vcv.txt
